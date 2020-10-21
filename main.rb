@@ -1,17 +1,13 @@
+module Enumerable
+  def my_each
+    return to_enum(:my_each) unless block_given?
 
-module Enum
- 
-   def my_each
-  
-   c= yield  unless block_given?
-  
-    for c in self
-    puts c
+    index = 0
+    while index != length
+      yield to_a[index]
+      index += 1
     end
-   end
+  end
 end
 
-include Enum  
-# self.my_each 
-# my_each([1,2,3,4,5]) 
-[1,2,3,4,5].my_each{|i|}
+[1, 2, 3, 4, 5].my_each { |i| puts i }
