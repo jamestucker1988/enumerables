@@ -39,4 +39,21 @@ def my_map
    puts arr
 end
 #  [8,2,3,4,5].my_map{|n|  n-2}
+# my_all
+  def my_all
+  return to_enum(__method__) unless block_given?
+  self.my_each do |e| return puts false  if yield(e)==false 
+    end
+  return puts true 
+  end
+[1,2,3,4,5].my_all { |x| x<7}
+
+# my_any
+def my_any  
+  return to_enum(__method__) unless block_given?
+  self.my_each do |e| return puts true  if yield(e)==true
+  end
+  return puts true 
+end 
+
 end
