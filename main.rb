@@ -28,5 +28,15 @@ def my_select
   puts arr
 end
 
-[1,4,6,8].my_select { |n| n>2  }
+# [1,4,6,8].my_select { |n| n>2  }
+
+#  [8,2,3,4,5].my_map{|n|  n-2}
+
+#my_map
+def my_map
+  arr=[]
+   self.my_each {|e| arr <<   yield(e) }
+   puts arr
+end
+#  [8,2,3,4,5].my_map{|n|  n-2}
 end
