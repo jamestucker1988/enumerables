@@ -9,6 +9,8 @@ module Enumerable
   end
 
 # [1,2,3,4,5].my_each {|x| puts x }
+
+# my_each_with_index
 def my_each_with_index()
   return to_enum(__method__) unless block_given?
   y=-1
@@ -19,4 +21,12 @@ end
 end
 #  [1,2,3,4,5].my_each_with_index {|x,y| puts x,y}
 
+#select
+def my_select 
+  arr =[]
+  self.my_each {|x| arr<< x unless yield(x)==false }
+  puts arr
+end
+
+[1,4,6,8].my_select { |n| n>2  }
 end
