@@ -1,109 +1,73 @@
 module Enumerable
-
-  def my_each
+  def my_each(&p)
     return enum_for(__method__) unless block_given?
 
-    index = 0
-    while index != length
-    yield (self[index])
-    
-      index+=1
-      
+    each do |i, k|
+      p.call(i, k)
     end
   end
 
+  { 'a' => 1, 'b' => 2 }.my_each { |x, y| puts x, y }
+  # my_each_with_index
+  def my_each_with_index
+    return to_enum(__method__) unless block_given?
 
-#  [1, 2, 3, 4, 5].my_each {|x|  puts x}
+    y = 0
+    my_each do |x|
+      yield x, y
+      y += 1
+    end
+  end
 
-#  def my_each_with_index 
-#        return to_enum(__method__) unless block_given?
-#         index=0
-#       while index < length
-#         yield(self[index],index)
-#       index +=1
-#       end
-# end
+  # { 'a' => 1, 'b' => 2 }.my_each_with_index { |x, y| puts x, y }
+  # select
+  def my_select
+    arr = []
+    my_each { |x| arr << x unless yield(x) == false }
+    puts arr
+  end
 
-#  [1,2,3,4,5].my_each_with_index {|x,y| puts x,y }
+  # [1,4,6,8].my_select { |n| n>2  }
+  #  [8,2,3,4,5].my_map{|n|  n-2}
+  # my_map
+  def my_map
+    arr = []
+    my_each { |e| arr << yield(e) }
+    puts arr
+  end
 
- #select
- def my_map
-   self.my_each {|e| puts yield(e) }
- end
+  #  [8,2,3,4,5].my_map{|n|  n-2}
+  # my_all
+  def my_all
+    return to_enum(__method__) unless block_given?
 
+    my_each do |e|
+      return puts false if yield(e) == false
+    end
+    puts true
+  end
 
-#  [8,2,3,4,5].my_map{|n|  n+2}
+  # [1,2,3,4,5].my_all { |x| x<7}
+  # my_any
+  def my_any
+    return to_enum(__method__) unless block_given?
 
- def my_select 
-     arr =[]
-     index=0
-     while index < length
-     arr << if yield(self[index])== true
-      index+=1
- end
+    my_each do |e|
+      return puts true if yield(e) == true
+    end
+    puts false
+  end
 
-[1,4,6,8].my_select do |n|  
-   if n > 2
-      return n
-   end 
- end
+  # [1,8,9,10,15].my_any { |x| x<7}
+  # my_none
+  def my_none
+    return to_enum(__method__) unless block_given?
 
-end 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#   [1,2,3,4,5].my_select do |a| 
-#    index=0
-#    while index < a.lenght
-#       puts a[index]
-#       index+=1
-#    end 
-#   end
+    my_each do |e|
+      return puts false if yield(e) == (
+          nil || false)
+    end
+    true
+  end
+  # [1,3,5].my_none {|x| x%2!=0 }
+end
