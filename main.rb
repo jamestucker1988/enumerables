@@ -11,27 +11,27 @@ def my_each_with_index()
   return to_enum(__method__) unless block_given?
    y=0
   self.my_each do|x| 
-    
   yield x,y
   y+=1
 end
 end
-{'a'=>1,'b'=>2}.my_each_with_index  { |x,y| puts x,y}
+# {'a'=>1,'b'=>2}.my_each_with_index  { |x,y| puts x,y}
 #select
 def my_select 
   arr =[]
   self.my_each {|x| arr<< x unless yield(x)==false }
   puts arr
 end
-# [1,4,6,8].my_select { |n| n>2  }
-#  [8,2,3,4,5].my_map{|n|  n-2}
+# (1..8).my_select { |n| n%2!=0  }
+
 #my_map
 def my_map
   arr=[]
-   self.my_each {|e| arr <<   yield(e) }
+   self.my_each {|e| arr << ( yield e )}
    puts arr
 end
 #  [8,2,3,4,5].my_map{|n|  n-2}
+ [8,2,3,4,5].my_map{|n|   n.to_s}
 # my_all
   def my_all
   return to_enum(__method__) unless block_given?
