@@ -7,7 +7,7 @@ module Enumerable
     end
   end
 
-  # { 'a' => 1, 'b' => 2 }.my_each { |x, y| puts x, y }
+  { 'a' => 1, 'b' => 2 }.my_each { |x, y| puts x, y }
   # my_each_with_index
   def my_each_with_index
     return to_enum(__method__) unless block_given?
@@ -19,7 +19,7 @@ module Enumerable
     end
   end
 
-  # { 'a' => 1, 'b' => 2 }.my_each_with_index { |x, y| puts x, y }
+  { 'a' => 1, 'b' => 2 }.my_each_with_index { |x, y| puts x, y }
   # select
   def my_select
     arr = []
@@ -27,8 +27,7 @@ module Enumerable
     puts arr
   end
 
-  # [1,4,6,8].my_select { |n| n>2  }
-  #  [8,2,3,4,5].my_map{|n|  n-2}
+  [1, 4, 6, 8].my_select { |n| n > 2 }
   # my_map
   def my_map
     arr = []
@@ -36,7 +35,7 @@ module Enumerable
     puts arr
   end
 
-  #  [8,2,3,4,5].my_map{|n|  n-2}
+  [8, 2, 3, 4, 5].my_map { |n| n - 2}
   # my_all
   def my_all
     return to_enum(__method__) unless block_given?
@@ -47,7 +46,7 @@ module Enumerable
     puts true
   end
 
-  # [1,2,3,4,5].my_all { |x| x<7}
+  [1, 2, 3, 4, 5].my_all { |x| x < 7}
   # my_any
   def my_any
     return to_enum(__method__) unless block_given?
@@ -58,7 +57,7 @@ module Enumerable
     puts false
   end
 
-  # [1,8,9,10,15].my_any { |x| x<7}
+  [1, 8, 9, 10, 15].my_any { |x| x < 7}
   # my_none
   def my_none
     my_each do |e|
@@ -67,7 +66,7 @@ module Enumerable
     end
     true
   end
-  # [1,3,5].my_none {|x| x%2!=0 }
+  [1, 3, 5].my_none { |x| x.odd? }
 
   def my_count
     arr = []
