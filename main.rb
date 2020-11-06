@@ -77,21 +77,25 @@ module Enumerable
 
   
   # test cases required by tse reviewer
-  p [3, 5, 4, 11].my_any? # => true
-  p [1, nil, false].my_any?(1) # => true
-  p [1, nil, false].my_any?(Integer) # => true
-  p %w[dog door rod blade].my_any?(/z/) # => false
-  p [1, 2, 3].my_any?(1) # => true
+  # p [3, 5, 4, 11].my_any? # => true
+  # p [1, nil, false].my_any?(1) # => true
+  # p [1, nil, false].my_any?(Integer) # => true
+  # p %w[dog door rod blade].my_any?(/z/) # => false
+  # p [1, 2, 3].my_any?(1) # => true
   
   # my_none
-  def my_none(arg=nil)
-    my_each do |e|
-      return puts false if yield(e) == (
-          nil || false)
+  def my_none?(arg=nil)
+    if arg.nil? == true
+    return false 
+    elsif arg.nil? == false
+      my_each {|item| return false if arg == item}
     end
     true
   end
-  # [1, 3, 5].my_none { |x| x.odd? }
+  p [1, 2, 3].my_none? # => false
+p [1, 2, 3].my_none?(String) # => true
+p [1, 2, 3, 4, 5].my_none?(2) # => false
+p [1, 2, 3].my_none?(4) # => true
 
   def my_count
     arr = []
