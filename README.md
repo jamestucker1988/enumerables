@@ -1,6 +1,6 @@
-# Ruby: Bubble Sorting
+# Ruby: Enumerables
 
-The purpose of this project was to create and implement set enumerables from enumerable module, namely, my_each,my_each_with_index,my_map,my_select,my_all?,my_any?,my_none?,my_count,my_inject,multiply_els. The enumerable is a important part of ruby and it's understanding how it works?
+The purpose of this project was to create and implement a set of enumerables from the enumerable module, namely, my_each,my_each_with_index,my_map,my_select,my_all?,my_any?,my_none?,my_count,my_inject, and multiply_els. Enumerables are an important part of ruby and understanding how it works is key to object-oriented programming.
 
 <img width="1440" alt="Screen Shot 2020-11-10 at 6 06 33 PM" src="https://user-images.githubusercontent.com/62937819/98659929-a3271b80-237f-11eb-85e9-c0aba103c1ac.png">
 <img width="1440" alt="Screen Shot 2020-11-10 at 6 06 28 PM" src="https://user-images.githubusercontent.com/62937819/98659947-a8846600-237f-11eb-8929-cd3bf02212cf.png">
