@@ -47,6 +47,11 @@ module Enumerable
   unless block_given?
     if var.is_a?(Proc) 
      my_each { c = false unless var.call }
+    
+    elsif var.is_a?(Regexp)
+    my_each {|x| c = false unless var.match?(x.to_s) }
+    elsif var.is_a?(Class)
+      my_each {|x| return  c = false if x != x.to_i }
     end
   end
     if block_given?
@@ -56,23 +61,8 @@ module Enumerable
     end
      c
   end
-  p [3, 5, 7, 11].my_all?(&:odd?) # => true
 
-  p [-8, -9, -6].my_all? { |n| n < 0 } # => true
   
-  p [3, 5, 8, 11].my_all?(&:odd?) # => false
-  
-  p [-8, -9, -6, 0].my_all? { |n| n < 0 } # => false
-  
-  # test cases required by tse reviewer
-  
-  p [1, 2, 3, 4, 5].my_all? # => true
-  
-  p [1, 2, 3].my_all?(Integer) # => true
-  
-  p %w[dog door rod blade].my_all?(/d/) # => true
-  
-  p [1, 1, 1].my_all?(1) # => true
   # my_any?
   def my_any?(arg=nil)
     if block_given?
