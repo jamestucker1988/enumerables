@@ -41,16 +41,38 @@ module Enumerable
     arr
   end
 
-  # my_all
-  def my_all?(_var = nil)
-    return to_enum(__method__) unless block_given?
-
-    my_each do |e|
-      return puts false if yield(e) == false
+  # my_all?
+  def my_all?(var = nil)
+    c = true
+  unless block_given?
+    if var.is_a?(Proc) 
+     my_each { c = false unless var.call }
     end
-    puts true
   end
+    if block_given?
+    my_each do |e|
+      c = false unless yield(e) 
+    end
+    end
+     c
+  end
+  p [3, 5, 7, 11].my_all?(&:odd?) # => true
 
+  p [-8, -9, -6].my_all? { |n| n < 0 } # => true
+  
+  p [3, 5, 8, 11].my_all?(&:odd?) # => false
+  
+  p [-8, -9, -6, 0].my_all? { |n| n < 0 } # => false
+  
+  # test cases required by tse reviewer
+  
+  p [1, 2, 3, 4, 5].my_all? # => true
+  
+  p [1, 2, 3].my_all?(Integer) # => true
+  
+  p %w[dog door rod blade].my_all?(/d/) # => true
+  
+  p [1, 1, 1].my_all?(1) # => true
   # my_any?
   def my_any?(arg=nil)
     if block_given?
