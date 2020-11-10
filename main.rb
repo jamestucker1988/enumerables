@@ -5,7 +5,7 @@ module Enumerable
   def my_each(&p)
     return to_enum(__method__) unless block_given?
 
-    each do |i, k|
+    for i,k in self
       p.call(i, k)
     end
   end
@@ -20,7 +20,7 @@ module Enumerable
       y += 1
     end
   end
-
+ 
   # my_select
   def my_select
     arr = []
