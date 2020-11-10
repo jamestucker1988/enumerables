@@ -185,19 +185,27 @@ end
         acc = 1
         if arg2.to_sym == :*
           my_each do |e|
+            acc = acc * e 
+          end
+          return acc * arg1
+        elsif arg1.nil?
+          my_each do |e|
             acc = acc * e
             
           end
         end
-        return acc * arg1
+      return acc
       end
-     
   end    
 
-  # p [1, 2, 3, 4].my_inject(10) { |accum, elem|  accum + elem } # => 20
-  # p [1, 2, 3, 4].my_inject { |accum, elem| accum + elem } # => 10
-  # p [5, 1, 2].my_inject('+') # => 8
-  # p (5..10).my_inject(2, :*) # should return 302400
-  # p (5..10).my_inject(4) { |prod, n| prod * n } # should return 604800
+  p [1, 2, 3, 4].my_inject(10) { |accum, elem|  accum + elem } # => 20
+  p [1, 2, 3, 4].my_inject { |accum, elem| accum + elem } # => 10
+  p [5, 1, 2].my_inject('+') # => 8
+  p (5..10).my_inject(2, :*) # should return 302400
+  p (5..10).my_inject(4) { |prod, n| prod * n } # should return 604800
   
+  def multiply_els(arg)
+    arg.my_inject(1) {|r, x| r * x}
+  end
+  p  multiply_els((2..5))
 end
