@@ -73,7 +73,7 @@ module Enumerable
     !my_any?(arg, &proc)
   end
 
-  def my_count(args=nil, &p)
+  def my_count?(args=nil, &p)
     count = 0
     if p.is_a?(Proc)
       my_each { |e| count += 1 if p.call(e)}
