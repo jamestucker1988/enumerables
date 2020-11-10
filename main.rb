@@ -146,4 +146,4 @@ end
 def multiply_els(arg)
   arg.my_inject(1) { |r, x| r * x}
 end
-p multiply_els((2..5))
+
