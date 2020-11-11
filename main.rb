@@ -53,6 +53,31 @@ module Enumerable
     arr
   end
 end
-  p [1, 2, 3, 8].my_select(&:even?) # => [2, 8]
-  p [0, 2018, 1994, -7].my_select { |n| n > 0 } # => [2018, 1994]
-  p [6, 11, 13].my_select(&:odd?) # => [11, 13]
+  # p [1, 2, 3, 8].my_select(&:even?) # => [2, 8]
+  # p [0, 2018, 1994, -7].my_select { |n| n > 0 } # => [2018, 1994]
+  # p [6, 11, 13].my_select(&:odd?) # => [11, 13]
+
+  # my_map
+  def my_map(proc = nil)
+    arr = []
+unless block_given?
+    if proc.is_a?(Proc)
+    my_each do |x| 
+      arr << proc.call(x)
+      end
+    end
+  end
+    if block_given?
+      my_each do |x| 
+        arr << yield(x) 
+      end
+    end
+    arr
+  end
+
+p [1, 2, 3].my_map { |n| 2 * n } # => [2,4,6]
+p %w[Hey Jude].my_map { |word| word + '?' } # => ["Hey?", "Jude?"]
+p [false, true].my_map(&:!) # => [true, false]
+my_proc = proc { |num| num > 10 }
+p [18, 22, 5, 6].my_map(my_proc) { |num| num < 10 } # => true true false false
+puts
