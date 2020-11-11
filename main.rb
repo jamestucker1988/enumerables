@@ -38,6 +38,7 @@ module Enumerable
           end
           end
        end
+       return to_enum(:my_select)
     end
     if block_given?
         my_each do |elem|
