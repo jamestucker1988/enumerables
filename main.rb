@@ -96,13 +96,40 @@ end
     end
      c
   end
-  p [3, 5, 7, 11].my_all?(&:odd?) # => true
-p [-8, -9, -6].my_all? { |n| n < 0 } # => true
-p [3, 5, 8, 11].my_all?(&:odd?) # => false
-p [-8, -9, -6, 0].my_all? { |n| n < 0 } # => false
-# test cases required by tse reviewer
-p [1, 2, 3, 4, 5].my_all? # => true
-p [1, 2, 3].my_all?(Integer) # => true
-p %w[dog door rod blade].my_all?(/d/) # => true
-p [1, 1, 1].my_all?(1) # => true
+# p [3, 5, 7, 11].my_all?(&:odd?) # => true
+# p [-8, -9, -6].my_all? { |n| n < 0 } # => true
+# p [3, 5, 8, 11].my_all?(&:odd?) # => false
+# p [-8, -9, -6, 0].my_all? { |n| n < 0 } # => false
+# # test cases required by tse reviewer
+# p [1, 2, 3, 4, 5].my_all? # => true
+# p [1, 2, 3].my_all?(Integer) # => true
+# p %w[dog door rod blade].my_all?(/d/) # => true
+# p [1, 1, 1].my_all?(1) # => true
+
+# my_any?
+  def my_any?(arg=nil)
+    if block_given?
+      my_each { |item| return true if yield(item) == true }
+    elsif arg.is_a?(Class)
+      my_each { |item| return true if item.is_a?(arg) }
+    elsif arg.is_a?(Regexp)
+      my_each { |item| return true if arg.match?(item.to_s)}
+    elsif arg.nil? == false
+      my_each { |item| return true if arg == item}
+    else
+      my_each { |item| return true if item }
+    end
+    false
+  end
+  p [7, 10, 3, 5].my_any?(&:even?) # => true
+  p [7, 10, 4, 5].my_any?(&:even?) # => true
+  p %w[q r s i].my_any? { |char| 'aeiou'.include?(char) } # => true
+  p [7, 11, 3, 5].my_any?(&:even?) # => false
+  p %w[q r s t].my_any? { |char| 'aeiou'.include?(char) } # => false
+  # test cases required by tse reviewer
+  p [3, 5, 4, 11].my_any? # => true
+  p [1, nil, false].my_any?(1) # => true
+  p [1, nil, false].my_any?(Integer) # => true
+  p %w[dog door rod blade].my_any?(/z/) # => false
+  p [1, 2, 3].my_any?(1) # => true
 end
