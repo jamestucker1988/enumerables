@@ -121,15 +121,31 @@ end
     end
     false
   end
-  p [7, 10, 3, 5].my_any?(&:even?) # => true
-  p [7, 10, 4, 5].my_any?(&:even?) # => true
-  p %w[q r s i].my_any? { |char| 'aeiou'.include?(char) } # => true
-  p [7, 11, 3, 5].my_any?(&:even?) # => false
-  p %w[q r s t].my_any? { |char| 'aeiou'.include?(char) } # => false
-  # test cases required by tse reviewer
-  p [3, 5, 4, 11].my_any? # => true
-  p [1, nil, false].my_any?(1) # => true
-  p [1, nil, false].my_any?(Integer) # => true
-  p %w[dog door rod blade].my_any?(/z/) # => false
-  p [1, 2, 3].my_any?(1) # => true
+  # p [7, 10, 3, 5].my_any?(&:even?) # => true
+  # p [7, 10, 4, 5].my_any?(&:even?) # => true
+  # p %w[q r s i].my_any? { |char| 'aeiou'.include?(char) } # => true
+  # p [7, 11, 3, 5].my_any?(&:even?) # => false
+  # p %w[q r s t].my_any? { |char| 'aeiou'.include?(char) } # => false
+  # # test cases required by tse reviewer
+  # p [3, 5, 4, 11].my_any? # => true
+  # p [1, nil, false].my_any?(1) # => true
+  # p [1, nil, false].my_any?(Integer) # => true
+  # p %w[dog door rod blade].my_any?(/z/) # => false
+  # p [1, 2, 3].my_any?(1) # => true
+
+  # my_none?
+  def my_none?(arg=nil, &proc)
+        !my_any?(arg, &proc)
+      end
+      
+      p [3, 5, 7, 11].my_none?(&:even?) # => true
+      p %w[sushi pizza burrito].my_none? { |word| word[0] == 'a' } # => true
+      p [3, 5, 4, 7, 11].my_none?(&:even?) # => false
+      p %w[asparagus sushi pizza apple burrito].my_none? { |word| word[0] == 'a' } # => false
+      # test cases required by tse reviewer
+      p [1, 2, 3].my_none? # => false
+      p [1, 2, 3].my_none?(String) # => true
+      p [1, 2, 3, 4, 5].my_none?(2) # => false
+      p [1, 2, 3].my_none?(4) # => true
 end
+
