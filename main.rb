@@ -147,6 +147,40 @@ end
       # p [1, 2, 3].my_none?(String) # => true
       # p [1, 2, 3, 4, 5].my_none?(2) # => false
       # p [1, 2, 3].my_none?(4) # => true
+# my_count
+      def my_count(args=nil, &p)
+            count = 0
+            if p.is_a?(Proc)
+              my_each { |e| count += 1 if p.call(e)}
+            end
+        
+            if block_given? == false
+              count = 0
+              my_each do |element|
+                if args == element
+                  count += 1
+                elsif args.nil?
+                  return length
+                end
+              end
+        
+              count
+            end
+            if block_given?
+              count = 0
+              my_each do |element|
+                count += 1 if yield(element)
+              end
+            end
+            count
+      end
+# p [1, 4, 3, 8].my_count(&:even?) # => 2
+# p %w[DANIEL JIA KRITI dave].my_count { |s| s == s.upcase } # => 3
+# p %w[daniel jia kriti dave].my_count { |s| s == s.upcase } # => 0
+# # test cases required by tse reviewer
+# p [1, 2, 3].my_count # => 3
+# p [1, 1, 1, 2, 3].my_count(1) # => 3
+        
 
 # my_inject
   def my_inject(arg1=nil, arg2=nil)
