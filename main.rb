@@ -138,14 +138,64 @@ end
         !my_any?(arg, &proc)
       end
       
-      p [3, 5, 7, 11].my_none?(&:even?) # => true
-      p %w[sushi pizza burrito].my_none? { |word| word[0] == 'a' } # => true
-      p [3, 5, 4, 7, 11].my_none?(&:even?) # => false
-      p %w[asparagus sushi pizza apple burrito].my_none? { |word| word[0] == 'a' } # => false
-      # test cases required by tse reviewer
-      p [1, 2, 3].my_none? # => false
-      p [1, 2, 3].my_none?(String) # => true
-      p [1, 2, 3, 4, 5].my_none?(2) # => false
-      p [1, 2, 3].my_none?(4) # => true
+      # p [3, 5, 7, 11].my_none?(&:even?) # => true
+      # p %w[sushi pizza burrito].my_none? { |word| word[0] == 'a' } # => true
+      # p [3, 5, 4, 7, 11].my_none?(&:even?) # => false
+      # p %w[asparagus sushi pizza apple burrito].my_none? { |word| word[0] == 'a' } # => false
+      # # test cases required by tse reviewer
+      # p [1, 2, 3].my_none? # => false
+      # p [1, 2, 3].my_none?(String) # => true
+      # p [1, 2, 3, 4, 5].my_none?(2) # => false
+      # p [1, 2, 3].my_none?(4) # => true
+
+# my_inject
+  def my_inject(arg1=nil, arg2=nil)
+    if block_given?
+      if arg1.is_a?(Integer)
+        my_each do |e|
+          arg1 = yield(arg1, e)
+        end
+        return arg1
+      elsif arg1.nil?
+        acc = 0
+        my_each do |e|
+          acc = yield(acc, e)
+        end
+        return acc
+      end
+    end
+    unless block_given?
+      acc = 0
+      if arg1 == '+'
+        my_each do |e|
+          acc += e
+        end
+        return acc
+      end
+    end
+    unless block_given?
+      acc = 1
+      if arg2.to_sym == :*
+        my_each do |e|
+          acc *= e
+        end
+        return acc * arg1
+      elsif arg1.nil?
+        my_each do |e|
+          acc *= e
+        end
+      else
+        raise localjumpError, 'no block given' 
+      end
+      acc
+    end
+  end
+
+# p [1, 2, 3, 4].my_inject(10) { |accum, elem| accum + elem } # => 20
+# p [1, 2, 3, 4].my_inject { |accum, elem| accum + elem } # => 10
+# p [5, 1, 2].my_inject('+') # => 8
+# p (5..10).my_inject(2, :*) # should return 302400
+# p (5..10).my_inject(4) { |prod, n| prod * n } # should return 604800
+# p [1, 2, 3].inject
 end
 
