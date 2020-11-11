@@ -13,33 +13,41 @@ module Enumerable
      self
   end
 
-#  {1=>"a",2=>"b",3=>'c'}.my_each {|k,v|  puts [k , v]}
-      # [1, 2, 3].my_each { |elem| print "#{elem + 1} " }
-      # (2...6).my_each {|x| puts "this is my number #{x.to_s}" }
+
 
   # my_each_with_index
   def my_each_with_index
     return to_enum(__method__) unless block_given?
+    c = 0
      if is_a?(Range) 
-      c = 0
-       my_each do 
-          |x| while c < size
-            yield(x,c)
-          end
-        elsif is_a?(Array) 
-          my_each do 
-            |x| while c < size
-              yield(x,c)
-            end
-          else
-            my_each do
-            |k, v| yield(k,v)  
-          end
+      
+       my_each do |x| 
+        if (c < size)
+            yield(c)
         end
+        c += 1
       end
-  end
+     elsif is_a?(Array) 
+          my_each do |x|
+               if (c < size)
 
-  print [1, 2, 3].my_each_with_index { |elem, idx| puts "#{elem} : #{idx}" } 
+               yield(c)
+                c += 1 
+               end 
+            end      
+     elsif is_a?(Hash)
+          my_each do |k, v|
+               if c < size 
+                yield(k)
+                 c += 1
+               end
+    end
+     end
+  end
+  
+
+  
+ 
   # my_select
   def my_select(arg = nil)
     arr = []
@@ -63,10 +71,6 @@ module Enumerable
     arr
   end
 
-  # p [1, 2, 3, 8].my_select(&:even?) # => [2, 8]
-  # p [0, 2018, 1994, -7].my_select { |n| n > 0 } # => [2018, 1994]
-  # p [6, 11, 13].my_select(&:odd?) # => [11, 13]
-
   # my_map
   def my_map(proc = nil)
     arr = []
@@ -85,11 +89,7 @@ end
     arr
   end
 
-# p [1, 2, 3].my_map { |n| 2 * n } # => [2,4,6]
-# p %w[Hey Jude].my_map { |word| word + '?' } # => ["Hey?", "Jude?"]
-# p [false, true].my_map(&:!) # => [true, false]
-# my_proc = proc { |num| num == 10 }
-# p [18, 22, 5, 6].my_map(my_proc) { |num| num > 10 } # => true true false false
+
  # my_all?
   def my_all?(var = nil)
     c = true
@@ -101,7 +101,10 @@ end
     my_each {|x| c = false unless var.match?(x.to_s) }
     elsif var.is_a?(Class)
       my_each {|x| return  c = false if x != x.to_i }
+    elsif var == nil
+      my_each {|x| c = false unless x.is_a?(Numeric)}
     end
+    true
   end
     if block_given?
     my_each do |e|
@@ -110,15 +113,20 @@ end
     end
      c
   end
-# p [3, 5, 7, 11].my_all?(&:odd?) # => true
-# p [-8, -9, -6].my_all? { |n| n < 0 } # => true
-# p [3, 5, 8, 11].my_all?(&:odd?) # => false
-# p [-8, -9, -6, 0].my_all? { |n| n < 0 } # => false
-# # test cases required by tse reviewer
-# p [1, 2, 3, 4, 5].my_all? # => true
-# p [1, 2, 3].my_all?(Integer) # => true
-# p %w[dog door rod blade].my_all?(/d/) # => true
-# p [1, 1, 1].my_all?(1) # => true
+#   [1,2,3].each # true
+# [1,2,nil].each # false
+
+# [1,2,3].my_each # true
+# [1,2,nil].my_each # true
+p [3, 5, 7, 11].my_all?(&:odd?) # => true
+p [-8, -9, -6].my_all? { |n| n < 0 } # => true
+p [3, 5, 8, 11].my_all?(&:odd?) # => false
+p [-8, -9, -6, 0].my_all? { |n| n < 0 } # => false
+# test cases required by tse reviewer
+p [1, 2, 3, 4, 5].my_all? # => true
+p [1, 2, 3].my_all?(Integer) # => true
+p %w[dog door rod blade].my_all?(/d/) # => true
+p [1, 1, 1].my_all?(1) # => true
 
 # my_any?
   def my_any?(arg=nil)
@@ -253,3 +261,4 @@ def multiply_els(arg)
 end
 
 # puts multiply_els([2, 4, 5]) # => 40
+# print [1, 2, 3].each_index { |elem, idx| puts "#{elem} : #{idx}" } 
