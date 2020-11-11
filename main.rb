@@ -3,17 +3,19 @@
 module Enumerable
   # my_each
   def my_each
-     return to_enum(__method__) unless block_given?
-  
+     return to_enum(:my_each) unless block_given?
+
      i = 0
      while i < size
-       is_a?(Range) ? yield(min + i) : yield(self[i])
+       is_a?(Range) ? yield(to_a[i]) : is_a?(Array)? yield(self[i]): yield(keys[i],values[i])
        i += 1
      end
      self
   end
 
-  #  [1, 2, 3].my_each { |elem| print "#{elem + 1} " }
+#  {1=>"a",2=>"b",3=>'c'}.my_each {|k,v|  puts [k , v]}
+      # [1, 2, 3].my_each { |elem| print "#{elem + 1} " }
+      # (2...6).my_each {|x| puts "this is my number #{x.to_s}" }
 
   # my_each_with_index
   def my_each_with_index
