@@ -137,7 +137,7 @@ end
   def my_none?(arg=nil, &proc)
         !my_any?(arg, &proc)
       end
-      
+
       # p [3, 5, 7, 11].my_none?(&:even?) # => true
       # p %w[sushi pizza burrito].my_none? { |word| word[0] == 'a' } # => true
       # p [3, 5, 4, 7, 11].my_none?(&:even?) # => false
@@ -199,3 +199,9 @@ end
 # p [1, 2, 3].inject
 end
 
+# multiply_els
+def multiply_els(arg)
+  arg.my_inject(1) { |r, x| r * x}
+end
+
+# puts multiply_els([2, 4, 5]) # => 40
