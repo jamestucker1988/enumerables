@@ -20,15 +20,26 @@ module Enumerable
   # my_each_with_index
   def my_each_with_index
     return to_enum(__method__) unless block_given?
-
-    y = 0
-    my_each do |x|
-      yield x, y
-      y += 1
-    end
+     if is_a?(Range) 
+      c = 0
+       my_each do 
+          |x| while c < size
+            yield(x,c)
+          end
+        elsif is_a?(Array) 
+          my_each do 
+            |x| while c < size
+              yield(x,c)
+            end
+          else
+            my_each do
+            |k, v| yield(k,v)  
+          end
+        end
+      end
   end
 
-  # print [1, 2, 3].my_each_with_index { |elem, idx| puts "#{elem} : #{idx}" } 
+  print [1, 2, 3].my_each_with_index { |elem, idx| puts "#{elem} : #{idx}" } 
   # my_select
   def my_select(arg = nil)
     arr = []
