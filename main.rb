@@ -77,20 +77,17 @@ unless block_given?
     end
     return to_enum(:my_map)
 end
-    if block_given?
+    if block_given? and proc.is_a?(Proc)
       my_each do |x| 
-        arr << yield(x) 
+        arr << proc.call(x)
+       end
+       else
+      my_each do |x| 
+        arr << yield(x)
+        end
       end
-    end
     arr
   end
-  
-p [1, 2, 3].my_map { |n| 2 * n } # => [2,4,6]
-p %w[Hey Jude].my_map { |word| word + '?' } # => ["Hey?", "Jude?"]
-p [false, true].my_map(&:!) # => [true, false]
-my_proc = proc { |num| num > 10 }
-p [18, 22, 5, 6].my_map(my_proc) { |num| num < 10 } # => true true false false
-p [1,2,3].my_map()
 
  # my_all?
   def my_all?(var = nil)
@@ -136,15 +133,7 @@ p [1,2,3].my_map()
   def my_none?(arg=nil, &proc)
         !my_any?(arg, &proc)
       end
-      # p [3, 5, 7, 11].my_none?(&:even?) # => true
-      # p %w[sushi pizza burrito].my_none? { |word| word[0] == 'a' } # => true
-      # p [3, 5, 4, 7, 11].my_none?(&:even?) # => false
-      # p %w[asparagus sushi pizza apple burrito].my_none? { |word| word[0] == 'a' } # => false
-      # # test cases required by tse reviewer
-      # p [1, 2, 3].my_none? # => false
-      # p [1, 2, 3].my_none?(String) # => true
-      # p [1, 2, 3, 4, 5].my_none?(2) # => false
-      # p [1, 2, 3].my_none?(4) # => true
+      
 # my_count
       def my_count(args=nil, &p)
             count = 0
