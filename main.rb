@@ -75,6 +75,7 @@ unless block_given?
       arr << proc.call(x)
       end
     end
+    return to_enum(:my_map)
 end
     if block_given?
       my_each do |x| 
@@ -84,6 +85,13 @@ end
     arr
   end
   
+p [1, 2, 3].my_map { |n| 2 * n } # => [2,4,6]
+p %w[Hey Jude].my_map { |word| word + '?' } # => ["Hey?", "Jude?"]
+p [false, true].my_map(&:!) # => [true, false]
+my_proc = proc { |num| num > 10 }
+p [18, 22, 5, 6].my_map(my_proc) { |num| num < 10 } # => true true false false
+p [1,2,3].my_map()
+
  # my_all?
   def my_all?(var = nil)
     c = true
@@ -107,6 +115,7 @@ end
     end
      c
   end
+
 # my_any?
   def my_any?(arg=nil)
     if block_given?
