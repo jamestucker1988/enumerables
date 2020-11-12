@@ -7,10 +7,9 @@ The purpose of this project was to create and implement a set of enumerables fro
 <img width="1440" alt="Screen Shot 2020-11-10 at 6 06 23 PM" src="https://user-images.githubusercontent.com/62937819/98659961-ae7a4700-237f-11eb-9813-fa0f6b7c1f9d.png">
 <img width="1440" alt="Screen Shot 2020-11-10 at 6 06 12 PM" src="https://user-images.githubusercontent.com/62937819/98659972-b0dca100-237f-11eb-940e-8f047a42bdfe.png">
 
-
 ## Built with
 
-- Ruby 
+- Ruby
 
 ## Getting Started
 
@@ -31,8 +30,8 @@ To get a local copy of the repository please run the following commands on your 
 👤 **Anand Kumar**
 
 [<code><img height="26" src="https://cdn.iconscout.com/icon/free/png-256/github-153-675523.png"></code>](https://github.com/jamestucker1988)
-[<code><img height="26" src="https://upload.wikimedia.org/wikipedia/sco/thumb/9/9f/Twitter_bird_logo_2012.svg/1200px-Twitter_bird_logo_2012.svg.png"></code>](https://twitter.com/https://twitter.com/anandku74070598)
-[<code><img height="26" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Linkedin.svg/1200px-Linkedin.svg.png"></code>](https://linkedin.com/in/anand-kumar-9128/)
+[<code><img height="26" src="https://upload.wikimedia.org/wikipedia/sco/thumb/9/9f/Twitter_bird_logo_2012.svg/1200px-Twitter_bird_logo_2012.svg.png"></code>](https://twitter.com/anandku74070598)
+[<code><img height="26" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Linkedin.svg/1200px-Linkedin.svg.png"></code>](https://www.linkedin.com/in/anand-kumar-912878189/)
 
 ## 🤝 Contributing
 
