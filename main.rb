@@ -4,7 +4,6 @@ module Enumerable
   # my_each
   def my_each
      i = 0
-     c = true
   return to_enum(:my_each) unless block_given?
   
      if block_given?
@@ -13,14 +12,8 @@ module Enumerable
        i += 1
      end
      end
-     c
   end
 
-  
-  # h = { "a" => 100, "b" => 200 }
-  # h.my_each {|key, value| puts "#{key} is #{value}" }
-p [1,2,3].my_each # true
-p [1,2,nil].my_each # false
 
   # my_each_with_index
   def my_each_with_index
@@ -30,7 +23,7 @@ p [1,2,nil].my_each # false
       
        my_each do |x| 
         if (c < size)
-            yield(c)
+            yield(x,c)
         end
         c += 1
       end
@@ -38,21 +31,21 @@ p [1,2,nil].my_each # false
           my_each do |x|
                if (c < size)
 
-               yield(c)
+               yield(x,c)
                 c += 1 
                end 
             end      
      elsif is_a?(Hash)
           my_each do |k, v|
                if c < size 
-                yield(k)
+                yield(k,v)
                  c += 1
                end
     end
      end
   end
   
-
+  
   
  
   # my_select
@@ -266,5 +259,3 @@ end
 # puts multiply_els([2, 4, 5]) # => 40
 # print [1, 2, 3].each_index { |elem, idx| puts "#{elem} : #{idx}" } 
 
- h = { "a" => 100, "b" => 200 }
-h.each {|key, value| puts "#{key} is #{value}" }
