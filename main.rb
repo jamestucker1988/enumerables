@@ -204,12 +204,12 @@ end
       acc
     end
   end
-# p [1, 2, 3, 4].my_inject(10) { |accum, elem| accum + elem } # => 20
-# p [1, 2, 3, 4].my_inject { |accum, elem| accum + elem } # => 10
-# p [5, 1, 2].my_inject('+') # => 8
-# p (5..10).my_inject(2, :*) # should return 302400
-# p (5..10).my_inject(4) { |prod, n| prod * n } # should return 604800
-# p [1, 2, 3].inject
+p [1, 2, 3, 4].my_inject(10) { |accum, elem| accum + elem } # => 20
+p [1, 2, 3, 4].my_inject { |accum, elem| accum + elem } # => 10
+p [5, 1, 2].my_inject('+') # => 8
+p (5..10).my_inject(2, :*) # should return 302400
+p (5..10).my_inject(4) { |prod, n| prod * n } # should return 604800
+p [1, 2, 3].inject
 end
 # multiply_els
 def multiply_els(arg)
