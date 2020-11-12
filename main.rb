@@ -3,17 +3,24 @@
 module Enumerable
   # my_each
   def my_each
-     return to_enum(:my_each) unless block_given?
-
      i = 0
+     c = true
+  return to_enum(:my_each) unless block_given?
+  
+     if block_given?
      while i < size
        is_a?(Range) ? yield(to_a[i]) : is_a?(Array)? yield(self[i]): yield(keys[i],values[i])
        i += 1
      end
-     self
+     end
+     c
   end
 
-
+  
+  # h = { "a" => 100, "b" => 200 }
+  # h.my_each {|key, value| puts "#{key} is #{value}" }
+p [1,2,3].my_each # true
+p [1,2,nil].my_each # false
 
   # my_each_with_index
   def my_each_with_index
@@ -113,20 +120,16 @@ end
     end
      c
   end
-#   [1,2,3].each # true
-# [1,2,nil].each # false
 
-# [1,2,3].my_each # true
-# [1,2,nil].my_each # true
-p [3, 5, 7, 11].my_all?(&:odd?) # => true
-p [-8, -9, -6].my_all? { |n| n < 0 } # => true
-p [3, 5, 8, 11].my_all?(&:odd?) # => false
-p [-8, -9, -6, 0].my_all? { |n| n < 0 } # => false
-# test cases required by tse reviewer
-p [1, 2, 3, 4, 5].my_all? # => true
-p [1, 2, 3].my_all?(Integer) # => true
-p %w[dog door rod blade].my_all?(/d/) # => true
-p [1, 1, 1].my_all?(1) # => true
+# p [3, 5, 7, 11].my_all?(&:odd?) # => true
+# p [-8, -9, -6].my_all? { |n| n < 0 } # => true
+# p [3, 5, 8, 11].my_all?(&:odd?) # => false
+# p [-8, -9, -6, 0].my_all? { |n| n < 0 } # => false
+# # test cases required by tse reviewer
+# p [1, 2, 3, 4, 5].my_all? # => true
+# p [1, 2, 3].my_all?(Integer) # => true
+# p %w[dog door rod blade].my_all?(/d/) # => true
+# p [1, 1, 1].my_all?(1) # => true
 
 # my_any?
   def my_any?(arg=nil)
@@ -262,3 +265,6 @@ end
 
 # puts multiply_els([2, 4, 5]) # => 40
 # print [1, 2, 3].each_index { |elem, idx| puts "#{elem} : #{idx}" } 
+
+ h = { "a" => 100, "b" => 200 }
+h.each {|key, value| puts "#{key} is #{value}" }
