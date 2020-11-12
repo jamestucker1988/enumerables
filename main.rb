@@ -215,5 +215,3 @@ end
 def multiply_els(arg)
   arg.my_inject(1) { |r, x| r * x}
 end
-# puts multiply_els([2, 4, 5]) # => 40
-# print [1, 2, 3].each_index { |elem, idx| puts "#{elem} : #{idx}" }
