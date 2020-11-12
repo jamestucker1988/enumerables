@@ -1,45 +1,48 @@
-# frozen_string_literal: true
-
 module Enumerable
   # my_each
   def my_each
-     return to_enum(:my_each) unless block_given?
-
      i = 0
+  return to_enum(:my_each) unless block_given?
+  
+     if block_given?
      while i < size
        is_a?(Range) ? yield(to_a[i]) : is_a?(Array)? yield(self[i]): yield(keys[i],values[i])
        i += 1
      end
-     self
+     end
   end
-
-#  {1=>"a",2=>"b",3=>'c'}.my_each {|k,v|  puts [k , v]}
-      # [1, 2, 3].my_each { |elem| print "#{elem + 1} " }
-      # (2...6).my_each {|x| puts "this is my number #{x.to_s}" }
-
   # my_each_with_index
   def my_each_with_index
     return to_enum(__method__) unless block_given?
+    c = 0
      if is_a?(Range) 
-      c = 0
-       my_each do 
-          |x| while c < size
+      
+       my_each do |x| 
+        if (c < size)
             yield(x,c)
-          end
-        elsif is_a?(Array) 
-          my_each do 
-            |x| while c < size
-              yield(x,c)
-            end
-          else
-            my_each do
-            |k, v| yield(k,v)  
-          end
         end
+        c += 1
       end
+     elsif is_a?(Array) 
+          my_each do |x|
+               if (c < size)
+               yield(x,c)
+                c += 1 
+               end 
+            end      
+     elsif is_a?(Hash)
+          my_each do |k, v|
+               if c < size 
+                yield(k,v)
+                 c += 1
+               end
+    end
+     end
   end
-
-  print [1, 2, 3].my_each_with_index { |elem, idx| puts "#{elem} : #{idx}" } 
+  
+  
+  
+ 
   # my_select
   def my_select(arg = nil)
     arr = []
@@ -62,11 +65,7 @@ module Enumerable
     end
     arr
   end
-
-  # p [1, 2, 3, 8].my_select(&:even?) # => [2, 8]
-  # p [0, 2018, 1994, -7].my_select { |n| n > 0 } # => [2018, 1994]
-  # p [6, 11, 13].my_select(&:odd?) # => [11, 13]
-
+  p [1,2,3,4,5].my_select 
   # my_map
   def my_map(proc = nil)
     arr = []
@@ -84,12 +83,7 @@ end
     end
     arr
   end
-
-# p [1, 2, 3].my_map { |n| 2 * n } # => [2,4,6]
-# p %w[Hey Jude].my_map { |word| word + '?' } # => ["Hey?", "Jude?"]
-# p [false, true].my_map(&:!) # => [true, false]
-# my_proc = proc { |num| num == 10 }
-# p [18, 22, 5, 6].my_map(my_proc) { |num| num > 10 } # => true true false false
+  
  # my_all?
   def my_all?(var = nil)
     c = true
@@ -101,7 +95,10 @@ end
     my_each {|x| c = false unless var.match?(x.to_s) }
     elsif var.is_a?(Class)
       my_each {|x| return  c = false if x != x.to_i }
+    elsif var == nil
+      my_each {|x| c = false unless x.is_a?(Numeric)}
     end
+    true
   end
     if block_given?
     my_each do |e|
@@ -110,16 +107,6 @@ end
     end
      c
   end
-# p [3, 5, 7, 11].my_all?(&:odd?) # => true
-# p [-8, -9, -6].my_all? { |n| n < 0 } # => true
-# p [3, 5, 8, 11].my_all?(&:odd?) # => false
-# p [-8, -9, -6, 0].my_all? { |n| n < 0 } # => false
-# # test cases required by tse reviewer
-# p [1, 2, 3, 4, 5].my_all? # => true
-# p [1, 2, 3].my_all?(Integer) # => true
-# p %w[dog door rod blade].my_all?(/d/) # => true
-# p [1, 1, 1].my_all?(1) # => true
-
 # my_any?
   def my_any?(arg=nil)
     if block_given?
@@ -135,23 +122,11 @@ end
     end
     false
   end
-  # p [7, 10, 3, 5].my_any?(&:even?) # => true
-  # p [7, 10, 4, 5].my_any?(&:even?) # => true
-  # p %w[q r s i].my_any? { |char| 'aeiou'.include?(char) } # => true
-  # p [7, 11, 3, 5].my_any?(&:even?) # => false
-  # p %w[q r s t].my_any? { |char| 'aeiou'.include?(char) } # => false
-  # # test cases required by tse reviewer
-  # p [3, 5, 4, 11].my_any? # => true
-  # p [1, nil, false].my_any?(1) # => true
-  # p [1, nil, false].my_any?(Integer) # => true
-  # p %w[dog door rod blade].my_any?(/z/) # => false
-  # p [1, 2, 3].my_any?(1) # => true
-
+  
   # my_none?
   def my_none?(arg=nil, &proc)
         !my_any?(arg, &proc)
       end
-
       # p [3, 5, 7, 11].my_none?(&:even?) # => true
       # p %w[sushi pizza burrito].my_none? { |word| word[0] == 'a' } # => true
       # p [3, 5, 4, 7, 11].my_none?(&:even?) # => false
@@ -188,14 +163,7 @@ end
             end
             count
       end
-# p [1, 4, 3, 8].my_count(&:even?) # => 2
-# p %w[DANIEL JIA KRITI dave].my_count { |s| s == s.upcase } # => 3
-# p %w[daniel jia kriti dave].my_count { |s| s == s.upcase } # => 0
-# # test cases required by tse reviewer
-# p [1, 2, 3].my_count # => 3
-# p [1, 1, 1, 2, 3].my_count(1) # => 3
         
-
 # my_inject
   def my_inject(arg1=nil, arg2=nil)
     if block_given?
@@ -238,7 +206,6 @@ end
       acc
     end
   end
-
 # p [1, 2, 3, 4].my_inject(10) { |accum, elem| accum + elem } # => 20
 # p [1, 2, 3, 4].my_inject { |accum, elem| accum + elem } # => 10
 # p [5, 1, 2].my_inject('+') # => 8
@@ -246,10 +213,9 @@ end
 # p (5..10).my_inject(4) { |prod, n| prod * n } # should return 604800
 # p [1, 2, 3].inject
 end
-
 # multiply_els
 def multiply_els(arg)
   arg.my_inject(1) { |r, x| r * x}
 end
-
 # puts multiply_els([2, 4, 5]) # => 40
+# print [1, 2, 3].each_index { |elem, idx| puts "#{elem} : #{idx}" }
