@@ -1,169 +1,161 @@
 module Enumerable
   # my_each
   def my_each
-     i = 0
-  return to_enum(:my_each) unless block_given?
-  
-     if block_given?
-     while i < size
-       is_a?(Range) ? yield(to_a[i]) : is_a?(Array)? yield(self[i]): yield(keys[i],values[i])
-       i += 1
-     end
-     end
+    i = 0
+    return to_enum(:my_each) unless block_given?
+
+    if block_given?
+      while i < size
+        is_a?(Range) ? yield(to_a[i]) : is_a?(Array) ? yield(self[i]) : yield(keys[i], values[i])
+        i += 1
+      end
+    end
   end
+
   # my_each_with_index
   def my_each_with_index
     return to_enum(__method__) unless block_given?
     c = 0
-     if is_a?(Range) 
-      
-       my_each do |x| 
-        if (c < size)
-            yield(x,c)
-        end
+    if is_a?(Range)
+
+      my_each do |x|
+        yield(x, c) if c < size
         c += 1
       end
-     elsif is_a?(Array) 
-          my_each do |x|
-               if (c < size)
-               yield(x,c)
-                c += 1 
-               end 
-            end      
-     elsif is_a?(Hash)
-          my_each do |k, v|
-               if c < size 
-                yield(k,v)
-                 c += 1
-               end
+    elsif is_a?(Array)
+      my_each do |x|
+        if c < size
+          yield(x, c)
+          c += 1
+        end
+      end
+    elsif is_a?(Hash)
+      my_each do |k, v|
+        if c < size
+          yield(k, v)
+          c += 1
+        end
+      end
     end
-     end
   end
-  
-  
-  
- 
+
   # my_select
   def my_select(arg = nil)
     arr = []
     unless block_given?
-       if arg.is_a?(Proc)
-         my_each do |elem| 
-          if arg.call(elem)
-            arr << elem 
-          end
-          end
-       end
-       return to_enum(:my_select)
+      if arg.is_a?(Proc)
+        my_each do |elem|
+          arr << elem if arg.call(elem)
+        end
+      end
+      return to_enum(:my_select)
     end
     if block_given?
-        my_each do |elem|
-       if yield(elem)
-        arr << elem
-       end
+      my_each do |elem|
+        arr << elem if yield(elem)
       end
     end
     arr
   end
-  p [1,2,3,4,5].my_select 
+  p [1, 2, 3, 4, 5].my_select
   # my_map
   def my_map(proc = nil)
     arr = []
-unless block_given?
-    if proc.is_a?(Proc)
-    my_each do |x| 
-      arr << proc.call(x)
-      end
-    end
-    return to_enum(:my_map)
-end
-    if block_given? and proc.is_a?(Proc)
-      my_each do |x| 
-        arr << proc.call(x)
-       end
-       else
-      my_each do |x| 
-        arr << yield(x)
+    unless block_given?
+      if proc.is_a?(Proc)
+        my_each do |x|
+          arr << proc.call(x)
         end
+      end
+      return to_enum(:my_map)
+    end
+    if block_given? && proc.is_a?(Proc)
+      my_each do |x|
+        arr << proc.call(x)
+      end
+    else
+      my_each do |x|
+        arr << yield(x)
+      end
       end
     arr
   end
 
- # my_all?
+  # my_all?
   def my_all?(var = nil)
     c = true
-  unless block_given?
-    if var.is_a?(Proc) 
-     my_each { c = false unless var.call }
-    
-    elsif var.is_a?(Regexp)
-    my_each {|x| c = false unless var.match?(x.to_s) }
-    elsif var.is_a?(Class)
-      my_each {|x| return  c = false if x != x.to_i }
-    elsif var == nil
-      my_each {|x| c = false unless x.is_a?(Numeric)}
+    unless block_given?
+      if var.is_a?(Proc)
+        my_each { c = false unless var.call }
+
+      elsif var.is_a?(Regexp)
+        my_each { |x| c = false unless var.match?(x.to_s) }
+      elsif var.is_a?(Class)
+        my_each { |x| return c = false if x != x.to_i }
+      elsif var.nil?
+        my_each { |x| c = false unless x.is_a?(Numeric) }
+      end
+      true
     end
-    true
-  end
     if block_given?
-    my_each do |e|
-      c = false unless yield(e) 
+      my_each do |e|
+        c = false unless yield(e)
+      end
     end
-    end
-     c
+    c
   end
 
-# my_any?
-  def my_any?(arg=nil)
+  # my_any?
+  def my_any?(arg = nil)
     if block_given?
       my_each { |item| return true if yield(item) == true }
     elsif arg.is_a?(Class)
       my_each { |item| return true if item.is_a?(arg) }
     elsif arg.is_a?(Regexp)
-      my_each { |item| return true if arg.match?(item.to_s)}
+      my_each { |item| return true if arg.match?(item.to_s) }
     elsif arg.nil? == false
-      my_each { |item| return true if arg == item}
+      my_each { |item| return true if arg == item }
     else
       my_each { |item| return true if item }
     end
     false
   end
-  
+
   # my_none?
-  def my_none?(arg=nil, &proc)
-        !my_any?(arg, &proc)
+  def my_none?(arg = nil, &proc)
+    !my_any?(arg, &proc)
       end
-      
-# my_count
-      def my_count(args=nil, &p)
-            count = 0
-            if p.is_a?(Proc)
-              my_each { |e| count += 1 if p.call(e)}
-            end
-        
-            if block_given? == false
-              count = 0
-              my_each do |element|
-                if args == element
-                  count += 1
-                elsif args.nil?
-                  return length
-                end
-              end
-        
-              count
-            end
-            if block_given?
-              count = 0
-              my_each do |element|
-                count += 1 if yield(element)
-              end
-            end
-            count
+
+  # my_count
+  def my_count(args = nil, &p)
+    count = 0
+    if p.is_a?(Proc)
+      my_each { |e| count += 1 if yield(e) }
+    end
+
+    if block_given? == false
+      count = 0
+      my_each do |element|
+        if args == element
+          count += 1
+        elsif args.nil?
+          return length
+        end
       end
-        
-# my_inject
-  def my_inject(arg1=nil, arg2=nil)
+
+      count
+    end
+    if block_given?
+      count = 0
+      my_each do |element|
+        count += 1 if yield(element)
+      end
+    end
+    count
+  end
+
+  # my_inject
+  def my_inject(arg1 = nil, arg2 = nil)
     if block_given?
       if arg1.is_a?(Integer)
         my_each do |e|
@@ -199,19 +191,13 @@ end
           acc *= e
         end
       else
-        raise localjumpError, 'no block given' 
+        raise localjumpError, 'no block given'
       end
       acc
     end
   end
-p [1, 2, 3, 4].my_inject(10) { |accum, elem| accum + elem } # => 20
-p [1, 2, 3, 4].my_inject { |accum, elem| accum + elem } # => 10
-p [5, 1, 2].my_inject('+') # => 8
-p (5..10).my_inject(2, :*) # should return 302400
-p (5..10).my_inject(4) { |prod, n| prod * n } # should return 604800
-p [1, 2, 3].inject
 end
 # multiply_els
 def multiply_els(arg)
-  arg.my_inject(1) { |r, x| r * x}
+  arg.my_inject(1) { |r, x| r * x }
 end
