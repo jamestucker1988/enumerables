@@ -77,7 +77,7 @@ module Enumerable
       my_each do |x|
         arr << yield(x)
       end
-      end
+    end
     arr
   end
 
@@ -124,7 +124,7 @@ module Enumerable
   # my_none?
   def my_none?(arg = nil, &proc)
     !my_any?(arg, &proc)
-      end
+  end
 
   # my_count
   def my_count(args = nil, &p)
