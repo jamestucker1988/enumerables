@@ -4,8 +4,8 @@ require_relative '../main'
 
 describe Enumerable do
   enumerable = [1, 2, 3]
-  enumerable_2 = (1..3)
-  enumerable_3 = { 'a' => 2, 'b' => 3, 'c' => 4 }
+  enumerable2 = (1..3)
+  enumerable3 = { 'a' => 2, 'b' => 3, 'c' => 4 }
   describe '#my_each' do
     it 'returns twice the value of each element' do
       arr = []
@@ -15,13 +15,13 @@ describe Enumerable do
 
     it 'returns thrice the value of each element' do
       range = []
-      enumerable_2.my_each { |el| range << el * 3 }
+      enumerable2.my_each { |el| range << el * 3 }
       expect(range).to eq([3, 6, 9])
     end
 
     it 'returns each element being added by five' do
       hash = []
-      enumerable_3.my_each { |_el, value| hash << value + 5 }
+      enumerable3.my_each { |_el, value| hash << value + 5 }
       expect(hash).to eq([7, 8, 9])
     end
   end
@@ -41,25 +41,25 @@ describe Enumerable do
 
     it 'returns each element with its index, with the value exponentiated by two.' do
       range = []
-      enumerable_2.my_each_with_index { |el, _value| range << el**2 }
+      enumerable2.my_each_with_index { |el, _value| range << el**2 }
       expect(range).to eq([1, 4, 9])
     end
 
     it 'returns each element with its index, with the index added by two.' do
       range = []
-      enumerable_2.my_each_with_index { |_el, value| range << value + 2 }
+      enumerable2.my_each_with_index { |_el, value| range << value + 2 }
       expect(range).to eq([2, 3, 4])
     end
 
     it 'returns each element with its index, with the value multiplied by three.' do
       hash = []
-      enumerable_3.my_each_with_index { |_el, value| hash << value * 3 }
+      enumerable3.my_each_with_index { |_el, value| hash << value * 3 }
       expect(hash).to eq([6, 9, 12])
     end
 
     it 'returns each element with its index, with the index divided by one.' do
       hash = []
-      enumerable_3.my_each_with_index { |_el, value| hash << value / 1 }
+      enumerable3.my_each_with_index { |_el, value| hash << value / 1 }
       expect(hash).to eq([2, 3, 4])
     end
   end
@@ -73,7 +73,7 @@ describe Enumerable do
 
     it 'returns each element that is an odd number.' do
       range = []
-      enumerable_2.my_select { |el| range << el if el.odd? }
+      enumerable2.my_select { |el| range << el if el.odd? }
       expect(range).to eq([1, 3])
     end
   end
@@ -87,13 +87,13 @@ describe Enumerable do
 
     it 'returns each element in string form.' do
       range = []
-      enumerable_2.my_map { |el| range << el.to_s }
+      enumerable2.my_map { |el| range << el.to_s }
       expect(range).to eq(%w[1 2 3])
     end
 
     it 'returns each element in symbol form.' do
       hash = []
-      enumerable_3.my_map { |el, _value| hash << el.to_sym }
+      enumerable3.my_map { |el, _value| hash << el.to_sym }
       expect(hash).to eq(%i[a b c])
     end
   end
@@ -110,7 +110,7 @@ describe Enumerable do
     end
 
     it 'checks if all elements are numerics.' do
-      flag = enumerable_2.my_all? { |el| el.class.superclass == Numeric }
+      flag = enumerable2.my_all? { |el| el.class.superclass == Numeric }
       expect(flag).to eq(true)
     end
 
@@ -142,22 +142,22 @@ describe Enumerable do
     end
 
     it 'checks if the elements are lesser than 3.' do
-      flag = enumerable_2.my_any? { |el| el < 3 }
+      flag = enumerable2.my_any? { |el| el < 3 }
       expect(flag).to eq(true)
     end
 
     it 'checks if the elements are greater than 10.' do
-      flag = enumerable_2.my_all? { |el| el > 10 }
+      flag = enumerable2.my_all? { |el| el > 10 }
       expect(flag).to eq(false)
     end
 
     it 'checks if any elements are string type.' do
-      flag = enumerable_3.my_any? { |el, _value| el.class == String }
+      flag = enumerable3.my_any? { |el, _value| el.class == String }
       expect(flag).to eq(true)
     end
 
     it "checks if any element's values are string type." do
-      flag = enumerable_3.my_any? { |_el, value| value.class == String }
+      flag = enumerable3.my_any? { |_el, value| value.class == String }
       expect(flag).to eq(false)
     end
   end
@@ -169,12 +169,12 @@ describe Enumerable do
     end
 
     it 'checks if any elements are of the nil type.' do
-      flag = enumerable_2.my_none?(&:nil?)
+      flag = enumerable2.my_none?(&:nil?)
       expect(flag).to eq(true)
     end
 
     it "checks if any element's values are lesser than 3." do
-      flag = enumerable_2.my_none? { |el| el < 3 }
+      flag = enumerable2.my_none? { |el| el < 3 }
       expect(flag).to eq(false)
     end
   end
@@ -191,12 +191,12 @@ describe Enumerable do
     end
 
     it 'checks how many elements there are that are equal to 3.' do
-      number = enumerable_2.my_count { |el| el == 3 }
+      number = enumerable2.my_count { |el| el == 3 }
       expect(number).to eq(1)
     end
 
     it 'checks how many elements there are that are divisible by 2.' do
-      number = enumerable_2.my_count(&:even?)
+      number = enumerable2.my_count(&:even?)
       expect(number).to eq(1)
     end
   end
@@ -218,7 +218,7 @@ describe Enumerable do
     end
 
     it 'returns the accumulated product of all elements, with two as the base value' do
-      number = enumerable_2.my_inject(3) { |product, value| product * value }
+      number = enumerable2.my_inject(3) { |product, value| product * value }
       expect(number).to eq(18)
     end
   end

@@ -16,7 +16,7 @@ Metrics/ClassLength:
 Metrics/ModuleLength:
   Max: 550
 Metrics/BlockLength:
-  ExcludedMethods: ["describe"]
+  IgnoredMethods: ["describe", "context"]
   Max: 30
 Metrics/CyclomaticComplexity:
   Enabled: false
