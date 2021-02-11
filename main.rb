@@ -6,7 +6,11 @@ module Enumerable
 
     if block_given?
       while i < size
-        is_a?(Range) ? yield(to_a[i]) : is_a?(Array) ? yield(self[i]) : yield(keys[i], values[i])
+        if is_a?(Range)
+  yield(to_a[i]
+else
+  is_a?(Array) ? yield(self[i]) : yield(keys[i], values[i])
+end
         i += 1
       end
     end
@@ -15,6 +19,7 @@ module Enumerable
   # my_each_with_index
   def my_each_with_index
     return to_enum(__method__) unless block_given?
+
     c = 0
     if is_a?(Range)
 
