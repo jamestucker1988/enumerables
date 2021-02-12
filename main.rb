@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-# rubocop:disable Style/Documentation
-module Enumerable # rubocop:disable Metrics/ModuleLength
+# rubocop:disable Metrics/ModuleLength, Style/GuardClause, Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Style/Documentation, Naming/MethodParameterName
+
+module Enumerable
   # my_each
   def my_each
     return to_enum(:my_each) unless block_given?
@@ -16,7 +17,7 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
     self
   end
 
-  def my_each_with_index # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+  def my_each_with_index
     return to_enum(__method__) unless block_given?
 
     c = 0
@@ -44,7 +45,7 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
   end
 
   # my_select
-  def my_select(arg = nil) # rubocop:disable Metrics/MethodLength
+  def my_select(arg = nil)
     arr = []
     unless block_given?
       if arg.is_a?(Proc)
@@ -63,7 +64,7 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
   end
   p [1, 2, 3, 4, 5].my_select
   # my_map
-  def my_map(proc = nil) # rubocop:disable Metrics/MethodLength
+  def my_map(proc = nil)
     arr = []
     unless block_given?
       if proc.is_a?(Proc)
@@ -86,7 +87,7 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
   end
 
   # my_all?
-  def my_all?(var = nil) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+  def my_all?(var = nil)
     c = true
     unless block_given?
       if var.is_a?(Proc)
@@ -111,7 +112,7 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
   end
 
   # my_any?
-  def my_any?(arg = nil) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+  def my_any?(arg = nil)
     if block_given?
       my_each { |item| return true if yield(item) == true }
     elsif arg.is_a?(Class)
@@ -132,7 +133,7 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
   end
 
   # my_count
-  def my_count(args = nil, &p) # rubocop:disable Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Naming/MethodParameterName
+  def my_count(args = nil, &p)
     count = 0
     if p.is_a?(Proc)
       my_each { |e| count += 1 if yield(e) }
@@ -160,7 +161,7 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
   end
 
   # my_inject
-  def my_inject(arg1 = nil, arg2 = nil) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+  def my_inject(arg1 = nil, arg2 = nil)
     if block_given?
       if arg1.is_a?(Integer)
         my_each do |e|
@@ -184,7 +185,7 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
         return acc
       end
     end
-    unless block_given? # rubocop:disable Style/GuardClause
+    unless block_given?
       acc = 1
       if arg2.to_sym == :*
         my_each do |e|
@@ -207,4 +208,4 @@ end
 def multiply_els(arg)
   arg.my_inject(1) { |r, x| r * x }
 end
-# rubocop:enable Style/Documentation
+# rubocop:enable Metrics/ModuleLength, Style/GuardClause, Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Style/Documentation, Naming/MethodParameterName
