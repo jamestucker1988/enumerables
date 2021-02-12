@@ -1,7 +1,5 @@
 require_relative '../main'
 
-# rubocop:disable Metrics/BlockLength
-
 describe Enumerable do
   enumerable = [1, 2, 3]
   enumerable2 = (1..3)
@@ -223,5 +221,3 @@ describe Enumerable do
     end
   end
 end
-
-# rubocop:enable Metrics/BlockLength
