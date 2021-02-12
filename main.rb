@@ -199,6 +199,7 @@ module Enumerable
     end
   end
 end
+
 # multiply_els
 def multiply_els(arg)
   arg.my_inject(1) { |r, x| r * x }

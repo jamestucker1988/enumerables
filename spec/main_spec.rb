@@ -120,7 +120,7 @@ describe Enumerable do
     end
 
     it 'checks if all elements are integers.' do
-      flag = enumerable.my_all? { |el| el.class == Integer }
+      flag = enumerable.my_all? { |el| el.instance_of?(Integer) }
       expect(flag).to eq(true)
     end
 
@@ -152,12 +152,12 @@ describe Enumerable do
     end
 
     it 'checks if any elements are string type.' do
-      flag = enumerable3.my_any? { |el, _value| el.class == String }
+      flag = enumerable3.my_any? { |el, _value| el.instance_of?(String) }
       expect(flag).to eq(true)
     end
 
     it "checks if any element's values are string type." do
-      flag = enumerable3.my_any? { |_el, value| value.class == String }
+      flag = enumerable3.my_any? { |_el, value| value.instance_of?(String) }
       expect(flag).to eq(false)
     end
   end
