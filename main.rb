@@ -1,19 +1,16 @@
 module Enumerable
   # my_each
   def my_each
-    i = 0
     return to_enum(:my_each) unless block_given?
 
-    if block_given?
-      while i < size
-        if is_a?(Range)
-  yield(to_a[i]
-else
-  is_a?(Array) ? yield(self[i]) : yield(keys[i], values[i])
-end
-        i += 1
-      end
+    ind = 0
+
+    while ind != to_a.length
+      yield to_a[ind]
+      ind += 1
     end
+
+    self
   end
 
   # my_each_with_index
