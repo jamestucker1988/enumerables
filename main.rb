@@ -3,7 +3,7 @@
 # rubocop:disable Style/Documentation
 module Enumerable # rubocop:disable Metrics/ModuleLength
   # my_each
-  def my_each # rubocop:disable Metrics/BlockLength
+  def my_each
     return to_enum(:my_each) unless block_given?
 
     ind = 0
@@ -16,9 +16,7 @@ module Enumerable # rubocop:disable Metrics/ModuleLength
     self
   end
 
-  # my_each_with_index
-
-  def my_each_with_index # rubocop:disable Metrics/BlockLength, Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, 
+  def my_each_with_index # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
     return to_enum(__method__) unless block_given?
 
     c = 0
@@ -209,3 +207,4 @@ end
 def multiply_els(arg)
   arg.my_inject(1) { |r, x| r * x }
 end
+# rubocop:enable Style/Documentation
