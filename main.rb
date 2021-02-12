@@ -1,20 +1,23 @@
+# rubocop:disable Metrics/ModuleLength, Style/GuardClause, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Naming/MethodParameterName
+
 module Enumerable
   # my_each
   def my_each
-    i = 0
     return to_enum(:my_each) unless block_given?
 
-    if block_given?
-      while i < size
-        is_a?(Range) ? yield(to_a[i]) : is_a?(Array) ? yield(self[i]) : yield(keys[i], values[i])
-        i += 1
-      end
+    ind = 0
+
+    while ind != to_a.length
+      yield to_a[ind]
+      ind += 1
     end
+
+    self
   end
 
-  # my_each_with_index
   def my_each_with_index
     return to_enum(__method__) unless block_given?
+
     c = 0
     if is_a?(Range)
 
@@ -102,6 +105,7 @@ module Enumerable
         c = false unless yield(e)
       end
     end
+
     c
   end
 
@@ -197,7 +201,9 @@ module Enumerable
     end
   end
 end
+
 # multiply_els
 def multiply_els(arg)
   arg.my_inject(1) { |r, x| r * x }
 end
+# rubocop:enable Metrics/ModuleLength, Style/GuardClause, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Naming/MethodParameterName
