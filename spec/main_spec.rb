@@ -1,8 +1,8 @@
-# frozen_string_literal: true
-
 require_relative '../main'
 
-describe Enumerable do # rubocop:disable Metrics/BlockLength
+# rubocop:disable Metrics/BlockLength
+
+describe Enumerable do
   enumerable = [1, 2, 3]
   enumerable2 = (1..3)
   enumerable3 = { 'a' => 2, 'b' => 3, 'c' => 4 }
@@ -26,7 +26,7 @@ describe Enumerable do # rubocop:disable Metrics/BlockLength
     end
   end
 
-  describe '#my_each_with_index' do # rubocop:disable Metrics/BlockLength
+  describe '#my_each_with_index' do
     it 'returns each element with its index, with the value multiplied by four.' do
       arr = []
       enumerable.my_each_with_index { |el, _value| arr << el * 4 }
@@ -223,3 +223,5 @@ describe Enumerable do # rubocop:disable Metrics/BlockLength
     end
   end
 end
+
+# rubocop:enable Metrics/BlockLength

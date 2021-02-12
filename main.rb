@@ -1,6 +1,4 @@
-# frozen_string_literal: true
-
-# rubocop:disable Metrics/ModuleLength, Style/GuardClause, Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Style/Documentation, Naming/MethodParameterName
+# rubocop:disable Metrics/ModuleLength, Style/GuardClause, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Naming/MethodParameterName
 
 module Enumerable
   # my_each
@@ -208,4 +206,4 @@ end
 def multiply_els(arg)
   arg.my_inject(1) { |r, x| r * x }
 end
-# rubocop:enable Metrics/ModuleLength, Style/GuardClause, Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Style/Documentation, Naming/MethodParameterName
+# rubocop:enable Metrics/ModuleLength, Style/GuardClause, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Naming/MethodParameterName
