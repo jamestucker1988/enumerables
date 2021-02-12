@@ -7,6 +7,10 @@ The purpose of this project was to create and implement a set of enumerables fro
 <img width="1440" alt="Screen Shot 2020-11-10 at 6 06 23 PM" src="https://user-images.githubusercontent.com/62937819/98659961-ae7a4700-237f-11eb-9813-fa0f6b7c1f9d.png">
 <img width="1440" alt="Screen Shot 2020-11-10 at 6 06 12 PM" src="https://user-images.githubusercontent.com/62937819/98659972-b0dca100-237f-11eb-940e-8f047a42bdfe.png">
 
+## Link to Issues
+
+- https://github.com/jamestucker1988/enumerables/issues
+
 ## Built with
 
 - Ruby
